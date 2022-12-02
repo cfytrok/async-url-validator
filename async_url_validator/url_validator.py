@@ -12,14 +12,16 @@ if platform.system() == 'Windows':
 
 
 class URLValidator:
-    def __init__(self, timeout=5, request_method='GET', throttler=None, status_assigner=None):
+    def __init__(self, timeout=5, request_method='GET', throttler=None, status_assigner=None, user_agent=None):
         self._timeout = aiohttp.ClientTimeout(total=timeout)
         self.request_method = request_method
         self._throttler = throttler or BaseThrottler()
         self._status_assigner = status_assigner or BaseStatusAssigner()
+        self._user_agent = user_agent or 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36 OPR/72.0.3815.465 (Edition Yx GX)'
 
     async def validate(self, *urls):
-        async with aiohttp.ClientSession(timeout=self._timeout) as self._session:
+        async with aiohttp.ClientSession(timeout=self._timeout,
+                                         headers={'User-Agent': self._user_agent}) as self._session:
             for task in self._create_request_tasks(*urls):
                 try:
                     await task
