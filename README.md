@@ -8,7 +8,7 @@ Allows you to check:
 It is possible to use throttling to avoid blocking.
 
 # Install
-```pip install py_url_validator```
+```pip install async_url_validator```
 
 # Usage
 
@@ -34,4 +34,4 @@ asyncio.run(main())
 
 
 ## CLI
-```url_validator -i input.csv -o output.csv -s "not available"```
+```async_url_validator -i input.csv -o output.csv -s "not available"```
